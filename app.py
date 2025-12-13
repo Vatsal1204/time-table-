@@ -11,6 +11,16 @@ from dotenv import load_dotenv
 import os
 from joblib import load
 import math
+from pymongo import MongoClient
+import streamlit as st
+
+MONGO_URI = st.secrets["MONGODB_URI"]
+DB_NAME = st.secrets["DB_NAME"]
+
+client = MongoClient(MONGO_URI)
+db = client[DB_NAME]
+
+timetable_collection = db["timetables"]
 
 # ============================================================
 # OPTIONAL ML MODEL LOADING
@@ -333,3 +343,4 @@ if st.button("Show Saved"):
     for item in saved:
         st.subheader(f"User ID: {item['user_id']}")
         st.dataframe(pd.DataFrame(item["timetable"]).head(20))
+
