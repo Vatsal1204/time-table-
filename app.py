@@ -21,6 +21,8 @@ client = MongoClient(MONGO_URI)
 db = client[DB_NAME]
 
 timetable_collection = db["timetables"]
+users_collection = db["users"]
+
 
 # ============================================================
 # OPTIONAL ML MODEL LOADING
@@ -345,5 +347,6 @@ if st.button("Show Saved"):
     for item in saved:
         st.subheader(f"User ID: {item['user_id']}")
         st.dataframe(pd.DataFrame(item["timetable"]).head(20))
+
 
 
