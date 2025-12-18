@@ -37,15 +37,17 @@ except Exception as e:
 # DATABASE CONFIGURATION
 # ============================================================
 
-load_dotenv()
-MONGO_URI = os.getenv("MONGODB_URI", "mongodb://localhost:27017")
-DB_NAME = os.getenv("DB_NAME", "timetable_app")
+import streamlit as st
+from pymongo import MongoClient
+
+MONGO_URI = st.secrets["MONGODB_URI"]
+DB_NAME = st.secrets["DB_NAME"]
 
 client = MongoClient(MONGO_URI)
 db = client[DB_NAME]
 
-users_collection = db["users"]
 timetable_collection = db["timetables"]
+
 
 # ============================================================
 # PAGE CONFIG & STYLING
@@ -343,4 +345,5 @@ if st.button("Show Saved"):
     for item in saved:
         st.subheader(f"User ID: {item['user_id']}")
         st.dataframe(pd.DataFrame(item["timetable"]).head(20))
+
 
