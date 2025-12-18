@@ -5,3 +5,7 @@ pymongo
 python-dotenv
 joblib
 scikit-learn
+pymongo[srv]
+dnspython
+
+
