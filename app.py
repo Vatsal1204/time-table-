@@ -7,21 +7,39 @@ import pandas as pd
 import json
 from datetime import datetime, timedelta
 from pymongo import MongoClient
-from dotenv import load_dotenv
 import os
 from joblib import load
 import math
 from pymongo import MongoClient
 import streamlit as st
 
-MONGO_URI = st.secrets["MONGODB_URI"]
-DB_NAME = st.secrets["DB_NAME"]
+# ============================================================
+# DATABASE CONFIGURATION (STREAMLIT SAFE)
+# ============================================================
 
-client = MongoClient(MONGO_URI)
-db = client[DB_NAME]
+from pymongo import MongoClient
 
-timetable_collection = db["timetables"]
+if "MONGODB_URI" in st.secrets:
+    # Streamlit Cloud
+    MONGO_URI = st.secrets["MONGODB_URI"]
+    DB_NAME = st.secrets["DB_NAME"]
+else:
+    # Local development fallback
+    MONGO_URI = "mongodb://localhost:27017"
+    DB_NAME = "timetable_app"
+
+try:
+    client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)
+    db = client[DB_NAME]
+    client.admin.command("ping")
+except Exception as e:
+    st.error("❌ Database connection failed")
+    st.stop()
+
+
 users_collection = db["users"]
+timetable_collection = db["timetables"]
+
 
 
 # ============================================================
@@ -347,6 +365,7 @@ if st.button("Show Saved"):
     for item in saved:
         st.subheader(f"User ID: {item['user_id']}")
         st.dataframe(pd.DataFrame(item["timetable"]).head(20))
+
 
 
 
