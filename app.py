@@ -38,8 +38,9 @@ try:
     timetable_collection = db["timetables"]
 
 except Exception as e:
-    st.error("❌ Database connection failed")
+    st.error(f"Mongo Error → {e}")
     st.stop()
+
 
 # ============================================================
 # OPTIONAL ML MODEL
@@ -199,3 +200,4 @@ if st.button("Show Saved"):
     for item in saved:
         st.subheader(f"User ID: {item['user_id']}")
         st.dataframe(pd.DataFrame(item["timetable"]).head(20))
+
