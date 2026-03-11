@@ -109,39 +109,44 @@ html, body, [class*="css"] {
 .cal-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
+    gap: 4px;
     margin-top: 0.5rem;
+    max-width: 420px;
 }
 .cal-day-label {
     text-align: center;
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     font-weight: 800;
     color: var(--muted);
     text-transform: uppercase;
-    padding: 4px 0;
+    padding: 4px 0 6px 0;
     letter-spacing: 0.5px;
 }
 .cal-day {
-    aspect-ratio: 1;
-    border-radius: 10px;
-    border: 2px solid var(--border);
-    background: var(--card2);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     font-weight: 700;
     color: var(--text);
+    margin: 0 auto;
 }
 .cal-day.selected {
     background: linear-gradient(135deg, #f78c40, #f75f8c);
-    border-color: transparent;
     color: white;
-    box-shadow: 0 4px 14px rgba(247,92,140,0.35);
+    box-shadow: 0 2px 8px rgba(247,92,140,0.45);
 }
-.cal-day.today { border-color: var(--accent2); color: var(--accent2); }
-.cal-day.empty { background: transparent; border-color: transparent; }
-.cal-day.past  { opacity: 0.25; }
+.cal-day.today {
+    border: 2px solid var(--accent2);
+    color: var(--accent2);
+}
+.cal-day.empty { background: transparent; }
+.cal-day.past  { opacity: 0.28; }
 
 .event-row {
     background: var(--card2);
